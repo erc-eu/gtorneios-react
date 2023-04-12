@@ -1,0 +1,74 @@
+.alterar-form {
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #1e2b36;
+    
+}
+
+.alterar-form h2 {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+}
+
+.alterar-form button {
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.alterar-form .form-group {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alterar-form label {
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    text-align: left;
+    color: black;
+}
+
+.alterar-form input[type='email'],
+.alterar-form input[type='text'],
+.alterar-form input[type='password'] {
+    width: 90%;
+    max-width: 90%;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: #162129;
+    color: white;
+    font-size: 16px;
+}
+
+.alterar-form button[type='submit'] {
+    display: flex;
+    width: 50%;
+    padding: 5px;
+    background-color: rgba(103, 161, 10, 0);
+    border: 1px solid #FFC300 ;
+    color: #FFC300 ;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.alterar-form button[type='submit']:hover {
+    color: #4b3900 ;
+    background-color: #FFC300;
+}
+
+p{
+    display: inline-block;
+    width: 20px;
+    padding-left: 10;
+    margin: 0;
+}
+

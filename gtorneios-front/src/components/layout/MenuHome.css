@@ -1,0 +1,41 @@
+.HeaderHomeMenu {
+    background-color: #1f2d3a;
+    color: #fff;
+}
+
+.HeaderHomeMenu nav {
+    display: flex;
+    margin: 0;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.HeaderHomeMenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.HeaderHomeMenu li {
+    margin-right: 0;
+}
+
+.HeaderHomeMenu li.right {
+    margin-left: auto;
+}
+
+.HeaderHomeMenu a{
+    color: #fff;
+    text-decoration: none;
+    padding: 15px;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.HeaderHomeMenu a:hover{
+    border-bottom: 1px solid #FFC300;
+    transition: 0.2s;
+}
