@@ -35,25 +35,40 @@
 
 
 .Menu .loginLink {
+
   background-color: none;
-  border: 1px solid #FFC300 ;
+  border: 1px solid #FFC300;
+}
+
+.Menu .loginLink:hover {
+  border: 1px solid green;
+  color: white;
 }
 
 .Menu .loginLink a {
   font-family: 'Arial Narrow', Arial, sans-serif;
   font-weight: bolder;
-  color: #FFC300 ;
+  color: #FFC300;
+}
+
+.Menu .loginLink a:hover {
+  color: white;
+
 }
 
 
 .Menu .registerLink {
   background-color: #FFC300;
-  
+  border: 1px solid #FFC300;
 }
+
+.Menu .registerLink:hover {
+  border: 1px solid #FFC300;
+}
+
 
 .Menu .registerLink a {
   font-family: 'Arial Narrow', Arial, sans-serif;
   font-weight: bolder;
-  color: #503d00 ;
-
+  color: #57450a;
 }

@@ -5,6 +5,7 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import Register from "./components/pages/Register"
 import UserAlterar from './components/pages/user/UserAlterar';
+import NovoTorneio from './components/pages/NovoTorneio';
 function App() {
   return (
     <div className="App">
@@ -14,6 +15,8 @@ function App() {
           <Route exact path='/login' Component={Login}><Login/></Route>
           <Route exact path='/register' Component={Register}><Register/></Route>
           <Route exact path={'/UserAlterar'} component={UserAlterar}><UserAlterar/></Route>
+          <Route exact path={'/NovoTorneio'} component={NovoTorneio}><NovoTorneio/></Route>
+
         </Switch>
       </Router>
     </div>

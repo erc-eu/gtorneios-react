@@ -4,14 +4,14 @@
     margin-top: 50px;
     padding: 20px;
     background-color: #1e2b36;
-    
+
 }
 
 .register-form h2 {
     text-align: center;
     font-size: 24px;
     color: white;
-    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-family: cursive;
 }
 
 .register-form button {
@@ -28,11 +28,10 @@
     display: block;
     margin-left: 10px;
     margin-bottom: 5px;
-    font-size: 18px;
-    font-weight: 700;
-    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    font-family: cursive;
     text-align: left;
-    color: black;
+    color: white;
 }
 
 .register-form input[type='email'],
@@ -40,32 +39,33 @@
 .register-form input[type='password'] {
     width: 90%;
     max-width: 90%;
+    text-align: center;
     padding: 10px;
-    border-radius: 3px;
     border: none;
     background-color: #162129;
     color: white;
     font-size: 16px;
 }
 
+
 .register-form button[type='submit'] {
     display: flex;
     width: 50%;
     padding: 5px;
     background-color: rgba(103, 161, 10, 0);
-    border: 1px solid #FFC300 ;
-    color: #FFC300 ;
+    border: 1px solid #FFC300;
+    color: #FFC300;
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
 }
 
 .register-form button[type='submit']:hover {
-    color: #4b3900 ;
+    color: #4b3900;
     background-color: #FFC300;
 }
 
-.voltarHomeRegister{
+.voltarHomeRegister {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,3 +83,22 @@
     padding: 10px;
     cursor: pointer;
 }
+
+
+
+.input-icons i {
+    position: absolute;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.icon {
+    padding: 7px;
+    color: white;
+    min-width: 50px;
+    text-align: left;
+}
+

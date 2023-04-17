@@ -2,11 +2,12 @@ package br.ufc.web.springrest01.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,8 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String avatar;
-
+    @OneToMany (mappedBy = "organizador")
+    private List<Torneio> torneiosCriados;
     
     
     public int getId() {

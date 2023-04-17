@@ -1,34 +1,48 @@
 import React, { useState } from 'react';
 import './styles/register.css';
 import axios from 'axios';
-import MenuNav from '../layout/MenuNav';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [avatar, setAvatar] = useState(null)
     const user = {
         username,
         password,
-        email
+        email,
+        avatar
     }
     const handleSubmit = (event) => {
+        console.log(user);
         axios.post("http://localhost:8080/api/user", user).then(result => {
             console.log(result)
+
         }).catch(err => console(err));
         console.log({ user });
+        console.log(event.target.avatar.value);
         event.preventDefault();
 
     };
+
 
     return (
         <div>
             <div className='voltarHomeRegister'><Link to={'/'}>Gtorneios</Link></div>
             <form className="register-form" onSubmit={handleSubmit}>
-                <div><MenuNav /></div>
-
-                <h2>SING UP</h2>
+                <h2>Sing Up</h2>
+                    
+                <div className="form-group">
+                    <label htmlFor="avatar">Avatar:</label>
+                    <input
+                        type="text"
+                        value={avatar}
+                        onChange={e => setAvatar(e.target.value)}
+                        id="avatar"
+                        name='avatar'
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="email">E-mail:</label>
                     <input
@@ -66,6 +80,7 @@ const Register = () => {
                     />
                 </div>
                 <button type="submit">Registrar</button>
+                <h4>já possui conta? <Link to={'/login'}>Conecte-se</Link></h4>
             </form>
         </div>
     );
