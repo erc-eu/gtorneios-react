@@ -1,12 +1,13 @@
 .HeaderHomeMenu {
     background-color: #1f2d3a;
     color: #fff;
+    height: 60px;
 }
 
 .HeaderHomeMenu nav {
     display: flex;
     margin: 0;
-    padding: 15px;
+    padding: 21px;
     justify-content: space-between;
     align-items: center;
 }
@@ -30,7 +31,7 @@
 .HeaderHomeMenu a{
     color: #fff;
     text-decoration: none;
-    padding: 15px;
+    padding: 21px;
     font-family: sans-serif;
     font-weight: bolder;
 }

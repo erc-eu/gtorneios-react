@@ -55,6 +55,7 @@ public class UserRestController {
             User usuario = user.get();
             System.out.println("entrou");
             usuario.setEmail(userAlt.getEmail());
+            usuario.setAvatar(userAlt.getAvatar());
             userRepository.save(usuario);
             return user;
         }

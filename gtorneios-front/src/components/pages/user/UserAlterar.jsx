@@ -3,13 +3,14 @@ import MenuLogado from "../../layout/MenuLogado";
 import './UserAlterar.css'
 import axios from "axios";
 import { useEffect } from "react";
-
+import AvartarAlterar from "./AvatarAlterar";
 
 const UserAlterar = () => {
 
     //useState
     const [userId, setId] = useState('');
     const [emailUpdate, setEmailUpdate] = useState('');
+    const [avatarUpdate, setAvatarUpdate] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem('usuario');
@@ -24,7 +25,8 @@ const UserAlterar = () => {
 
 
     const user = {
-        email: emailUpdate
+        email: emailUpdate,
+        avatar: avatarUpdate
     }
 
     const rout = 'http://localhost:8080/api/user/' + userId + '';
@@ -53,6 +55,19 @@ const UserAlterar = () => {
         <div>
             <MenuLogado />
             <form onSubmit={updateSubmit} className="alterar-form">
+                <AvartarAlterar imagem={avatarUpdate} />
+                <div className="form-group">
+                    <label htmlFor="avatar">Avatar:</label>
+                    <input
+                        type="text"
+                        id="avatar"
+                        value={avatarUpdate}
+                        onChange={e => setAvatarUpdate(e.target.value)}
+                        placeholder="insira o a url da imagem"
+                        name='avatar'
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="email">E-mail:</label>
                     <input

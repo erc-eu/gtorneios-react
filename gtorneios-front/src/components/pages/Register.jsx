@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './styles/register.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Avartar from './user/AvatarAlterar';
+
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -26,18 +28,20 @@ const Register = () => {
     };
 
 
+
     return (
         <div>
             <div className='voltarHomeRegister'><Link to={'/'}>Gtorneios</Link></div>
             <form className="register-form" onSubmit={handleSubmit}>
                 <h2>Sing Up</h2>
-                    
+                <Avartar imagem={avatar}/>
                 <div className="form-group">
                     <label htmlFor="avatar">Avatar:</label>
                     <input
                         type="text"
                         value={avatar}
                         onChange={e => setAvatar(e.target.value)}
+                        placeholder='Cole uma URL de uma imagem'
                         id="avatar"
                         name='avatar'
                         required
