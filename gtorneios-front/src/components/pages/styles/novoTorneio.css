@@ -1,0 +1,112 @@
+.novoTorneio-form {
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #1e2b36;
+}
+
+.novoTorneio-form .form-group {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.novoTorneio-form label {
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-family: cursive;
+    text-align: left;
+    color: white;
+}
+
+
+.novoTorneio-form input {
+    width: 90%;
+    max-width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #162129;
+    color: white;
+    font-size: 16px;
+}
+
+.buttonIncDec {
+    outline: 1px solid #1e2b36;
+}
+
+.buttonIncDec:focus {
+    outline: 1px solid #FFC300;
+}
+
+input {
+    outline: 1px solid #1e2b36;
+}
+
+input:focus {
+    outline: 1px solid #FFC300;
+    transition: 0.5s;
+}
+
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.buttonIncDec {
+    width: 60px;
+    border-radius: 10%;
+    margin: 10px;
+    margin-bottom: 0px;
+    padding: 10px;
+    background-color: #162129;
+    border: none;
+    color: #FFC300;
+    font-size: 21px;
+}
+
+.buttonIncDec:hover {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+.labelEsporte {
+    position: absolute;
+}
+
+.select-custom {
+    background-color: #162129;
+    width: 140px;
+    height: 30px;
+    display: inline-block;
+    font-family: cursive;
+    border-radius: 3px;
+    margin-left: 0px;
+    border: none;
+    color: #FFC300;
+}
+
+.novoTorneio-form button[type='submit'] {
+    display: flex;
+    width: 50%;
+    padding: 5px;
+    margin: 0 auto;
+    justify-content: center;
+    background-color: rgba(103, 161, 10, 0);
+    border: 1px solid #FFC300;
+    color: #FFC300;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.novoTorneio-form button[type='submit']:hover {
+    color: #4b3900;
+    background-color: #FFC300;
+}

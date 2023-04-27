@@ -15,16 +15,34 @@ public class Torneio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codTorneio;
-    private String nome;
-    private String descricao;
-    private int quantidadeDeTimes;
+    private String nomeT;
+    private String descricaoT;
+    private int qtdDeTimes;
     private double premiacao;
     private String esporte;
-    private String tipoDeCompeticao;
     @ManyToOne
     private User organizador;
-    @OneToMany (mappedBy = "torneio")
+    @OneToMany(mappedBy = "torneio")
     private List<Partida> partidas;
+
+    public Torneio() {
+    }
+
+    
+
+    public Torneio(int codTorneio, String nomeT, String descricaoT, int qtdDeTimes, double premiacao, String esporte,
+            User organizador, List<Partida> partidas) {
+        this.codTorneio = codTorneio;
+        this.nomeT = nomeT;
+        this.descricaoT = descricaoT;
+        this.qtdDeTimes = qtdDeTimes;
+        this.premiacao = premiacao;
+        this.esporte = esporte;
+        this.organizador = organizador;
+        this.partidas = partidas;
+    }
+
+
 
     public int getCodTorneio() {
         return codTorneio;
@@ -34,28 +52,28 @@ public class Torneio {
         this.codTorneio = codTorneio;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeT() {
+        return nomeT;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeT(String nomeT) {
+        this.nomeT = nomeT;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescricaoT() {
+        return descricaoT;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescricaoT(String descricaoT) {
+        this.descricaoT = descricaoT;
     }
 
-    public int getQuantidadeDeTimes() {
-        return quantidadeDeTimes;
+    public int getQtdDeTimes() {
+        return qtdDeTimes;
     }
 
-    public void setQuantidadeDeTimes(int quantidadeDeTimes) {
-        this.quantidadeDeTimes = quantidadeDeTimes;
+    public void setQtdDeTimes(int qtdDeTimes) {
+        this.qtdDeTimes = qtdDeTimes;
     }
 
     public double getPremiacao() {
@@ -72,14 +90,6 @@ public class Torneio {
 
     public void setEsporte(String esporte) {
         this.esporte = esporte;
-    }
-
-    public String getTipoDeCompeticao() {
-        return tipoDeCompeticao;
-    }
-
-    public void setTipoDeCompeticao(String tipoDeCompeticao) {
-        this.tipoDeCompeticao = tipoDeCompeticao;
     }
 
     public User getOrganizador() {

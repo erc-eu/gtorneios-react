@@ -64,7 +64,6 @@ public class UserRestController {
 
     @PostMapping
     UserDTO addUser(@RequestBody User user) {
-        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         return new UserDTO(savedUser.getUsername(), savedUser.getEmail());

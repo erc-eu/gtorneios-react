@@ -16,7 +16,6 @@ const Dropdown = () => {
             headers: { Authorization: `Basic ${token}` }
         };
         axios.get('http://localhost:8080/api/user/me', config).then(result => {
-            console.log(result)
             setUser(result.data.name);
             setAvatarLogado(result.data.principal.avatar);
         })
@@ -38,7 +37,7 @@ const Dropdown = () => {
             </div>
             {(
                 <div className="dropdown-content">
-                    <button className="dropdown-item">Torneios Criados</button>
+                    <Link to={'/TorneiosCriados'}><button className="dropdown-item">Torneios Criados</button></Link>
                     <Link to={'/UserAlterar'}><button className="dropdown-item" >Alterar Dados</button></Link>
                     <button className="dropdown-item" onClick={sair}>Sair</button>
                 </div>
