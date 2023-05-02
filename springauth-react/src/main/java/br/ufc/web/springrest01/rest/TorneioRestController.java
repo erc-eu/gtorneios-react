@@ -1,5 +1,7 @@
 package br.ufc.web.springrest01.rest;
 
+
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,11 +34,18 @@ public class TorneioRestController {
         Iterable<Torneio> findAll = torneioRepository.findAll();
         return findAll;
     }
-
+    
     @GetMapping(path = { "/{id}" })
     Torneio getTorneio(@PathVariable Integer id) {
         Optional<Torneio> result = torneioRepository.findById(id);
         return !result.isPresent() ? null : result.get();
+    }
+
+    @GetMapping(path = { "/{id}/user" })
+    Iterable<Torneio> getTorneioUser(@PathVariable Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        List<Torneio> result = torneioRepository.findByOrganizador(user);
+        return result;
     }
 
     @PostMapping(path = { "/{id}" })
@@ -44,7 +53,7 @@ public class TorneioRestController {
         System.out.println("aquiiiiiiiiiiii" + torneio);
         Optional<User> torn = userRepository.findById(id);
         if (torn.isPresent()) {
-            torneio.setOrganizador(torn.get());
+            torneio.setOrganizador(torn.get());;
             Torneio savedTorneio = torneioRepository.save(torneio);
             return savedTorneio;
         }

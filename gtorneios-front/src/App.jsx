@@ -7,7 +7,7 @@ import Register from "./components/pages/Register"
 import UserAlterar from './components/pages/user/UserAlterar';
 import NovoTorneio from './components/pages/torneio/NovoTorneio';
 import TorneiosCriados from './components/pages/torneio/TorneiosCriados';
-
+import AddTimes from './components/layout/times/AddTimes';
 function App() {
   return (
     <div className="App">
@@ -19,6 +19,7 @@ function App() {
           <Route exact path={'/UserAlterar'} component={UserAlterar}><UserAlterar/></Route>
           <Route exact path={'/NovoTorneio'} component={NovoTorneio}><NovoTorneio/></Route>
           <Route exact path={'/TorneiosCriados'} component={TorneiosCriados}><TorneiosCriados/></Route>
+          <Route path="/AddTimes/:id" component={AddTimes}></Route>
         </Switch>
       </Router>
     </div>

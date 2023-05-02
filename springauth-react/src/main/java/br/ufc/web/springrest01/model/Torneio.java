@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -14,13 +15,14 @@ public class Torneio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codTorneio;
+    private Integer codTorneio;
     private String nomeT;
     private String descricaoT;
     private int qtdDeTimes;
     private double premiacao;
     private String esporte;
     @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User organizador;
     @OneToMany(mappedBy = "torneio")
     private List<Partida> partidas;
