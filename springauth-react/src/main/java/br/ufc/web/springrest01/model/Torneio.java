@@ -6,34 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 
 @Entity
 public class Torneio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer codTorneio;
+    private int codTorneio;
     private String nomeT;
     private String descricaoT;
     private int qtdDeTimes;
     private double premiacao;
     private String esporte;
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User organizador;
-    @OneToMany(mappedBy = "torneio")
-    private List<Partida> partidas;
+    @OneToMany(mappedBy = "torneioCod")
+    private List<Time> times;
+
 
     public Torneio() {
     }
 
-    
-
     public Torneio(int codTorneio, String nomeT, String descricaoT, int qtdDeTimes, double premiacao, String esporte,
-            User organizador, List<Partida> partidas) {
+            User organizador) {
         this.codTorneio = codTorneio;
         this.nomeT = nomeT;
         this.descricaoT = descricaoT;
@@ -41,7 +40,7 @@ public class Torneio {
         this.premiacao = premiacao;
         this.esporte = esporte;
         this.organizador = organizador;
-        this.partidas = partidas;
+
     }
 
 
@@ -102,12 +101,9 @@ public class Torneio {
         this.organizador = organizador;
     }
 
-    public List<Partida> getPartidas() {
-        return partidas;
-    }
 
-    public void setPartidas(List<Partida> partidas) {
-        this.partidas = partidas;
-    }
+
+
+
 
 }

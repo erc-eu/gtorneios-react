@@ -10,8 +10,6 @@ const MenuLogado = () => {
             </div>
             <div className="menu-right">
                 <Link to={'/NovoTorneio'}><button className="menu-button">Novo Torneio</button></Link>
-                <button className="menu-button">Botão 2</button>
-                <button className="menu-button">Botão 3</button>
             </div>
         </div>
 

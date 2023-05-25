@@ -27,6 +27,8 @@ public class UserRestController {
     @Autowired
     UserRepository userRepository;
 
+ 
+
     @Autowired
     private PasswordEncoder passwordEncoder;
         
@@ -69,4 +71,6 @@ public class UserRestController {
         return new UserDTO(savedUser.getUsername(), savedUser.getEmail());
     }
 
+
+    
 }

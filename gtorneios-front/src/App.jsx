@@ -20,6 +20,7 @@ function App() {
           <Route exact path={'/NovoTorneio'} component={NovoTorneio}><NovoTorneio/></Route>
           <Route exact path={'/TorneiosCriados'} component={TorneiosCriados}><TorneiosCriados/></Route>
           <Route path="/AddTimes/:id" component={AddTimes}></Route>
+
         </Switch>
       </Router>
     </div>

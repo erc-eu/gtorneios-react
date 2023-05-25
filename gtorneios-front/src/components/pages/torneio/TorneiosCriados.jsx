@@ -17,7 +17,7 @@ const TorneiosCriados = () => {
         axios.get("http://localhost:8080/api/user/me", config).then(result => {
             axios.get("http://localhost:8080/api/torneio/" + result.data.principal.id + "/user", config).then(res => {
                 setTorneioCriado(res.data);
-                
+                console.log(res)
             })
         })
     }, []);

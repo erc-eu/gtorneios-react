@@ -7,40 +7,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Partida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codPartida;
-    @ManyToOne
-    private Torneio torneio;
+    private int codPartida;
     private LocalDateTime dataHora;
     private String local;
+  
     @ManyToOne
     private Time time1;
+   
     @ManyToOne
     private Time time2;
     private String placar;
     private String momentoDaPontuacao;
     private String estatisticas;
 
-    public Long getId() {
+    public int getId() {
         return codPartida;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.codPartida = id;
     }
 
-    public Torneio getTorneio() {
-        return torneio;
-    }
 
-    public void setTorneio(Torneio torneio) {
-        this.torneio = torneio;
-    }
 
     public LocalDateTime getDataHora() {
         return dataHora;
@@ -96,6 +91,10 @@ public class Partida {
 
     public void setEstatisticas(String estatisticas) {
         this.estatisticas = estatisticas;
+    }
+
+    public Time findByTime1(Time time) {
+        return null;
     }
 
 }

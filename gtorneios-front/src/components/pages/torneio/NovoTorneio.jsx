@@ -41,10 +41,11 @@ const NovoTorneio = () => {
             headers: { Authorization: `Basic ${token}` }
         };
         axios.get("http://localhost:8080/api/user/me", config).then(result => {
-            setUser(result);
+            setUser(result.data.principal.id);
         })
     }, []);
 
+    
     const torneio = {
         nomeT: nomeTorneio,
         descricaoT: description,
@@ -52,15 +53,15 @@ const NovoTorneio = () => {
         premiacao: premiacao,
         esporte: esporte
     }
-
+    
     const handleSubmit = (event) => {
         const token = localStorage.getItem('usuario');
         const config = {
             headers: { Authorization: `Basic ${token}` }
         };
-        axios.post("http://localhost:8080/api/torneio/" + user.data.principal.id + "", torneio, config).then(result => {
+        axios.post("http://localhost:8080/api/torneio/" + user + "", torneio, config).then(result => {
             console.log(result)
-        }).catch(err => console("erro" + err));
+        }).catch(err => { console.error("erro", err) });
         event.preventDefault();
     }
 

@@ -50,10 +50,9 @@ public class TorneioRestController {
 
     @PostMapping(path = { "/{id}" })
     Torneio addTorneio(@RequestBody Torneio torneio, @PathVariable Integer id) {
-        System.out.println("aquiiiiiiiiiiii" + torneio);
         Optional<User> torn = userRepository.findById(id);
         if (torn.isPresent()) {
-            torneio.setOrganizador(torn.get());;
+            torneio.setOrganizador(torn.get());
             Torneio savedTorneio = torneioRepository.save(torneio);
             return savedTorneio;
         }

@@ -20,7 +20,7 @@ const Register = () => {
         axios.post("http://localhost:8080/api/user", user).then(result => {
             console.log(result)
 
-        }).catch(err => console(err));
+        }).catch(err => {console(err)});
         console.log({ user });
         console.log(event.target.avatar.value);
         event.preventDefault();

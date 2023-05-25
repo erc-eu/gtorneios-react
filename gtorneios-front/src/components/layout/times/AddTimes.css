@@ -1,0 +1,259 @@
+.container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 30px;
+}
+
+.containerColuna {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+}
+
+
+.opt {
+    width: 200px;
+    height: 400px;
+    background-color: none;
+    border: 2px solid black;
+    border-right: none;
+    color: white;
+}
+
+.coluna1 {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border: 2px solid black;
+    border-left: none;
+    overflow: auto;
+}
+
+/* Oculta a barra de rolagem */
+.coluna1::-webkit-scrollbar {
+    width: 8px;
+    /* Largura da barra de rolagem */
+    background-color: transparent;
+    /* Cor de fundo da barra de rolagem */
+}
+
+/* Estiliza o thumb (botão deslizante) da barra de rolagem */
+.coluna1::-webkit-scrollbar-thumb {
+    background-color: none;
+    /* Cor do thumb */
+    border-radius: 4px;
+    /* Raio de borda do thumb */
+}
+
+/* Exibe a barra de rolagem durante a rolagem */
+.coluna1:hover::-webkit-scrollbar {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Cor de fundo da barra de rolagem */
+}
+
+/* Estiliza o thumb (botão deslizante) da barra de rolagem durante a rolagem */
+.coluna1:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Cor do thumb */
+}
+
+.opt-input {
+
+    text-align: center;
+}
+
+.opt-input label {
+    float: left;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.opt-input input[type='text'] {
+    max-width: 150px;
+    color: white;
+    background-color: #1e2b36;
+    border: none;
+    padding: 5px;
+    font-weight: bolder;
+
+}
+
+
+.opt-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.opt-button button {
+    background-color: rgba(103, 161, 10, 0);
+    border: 1px solid #FFC300;
+    color: #FFC300;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.opt-button button:hover {
+    color: #4b3900;
+    background-color: #FFC300;
+}
+
+.colunaT {
+    width: 100%;
+    height: auto;
+
+}
+
+.colunaT2 {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+}
+
+.colunaTimes {
+    width: auto;
+    height: auto;
+    margin: 12px;
+    display: block;
+    padding: 0;
+    border-bottom: 1px solid black;
+
+}
+
+.colunaTimes img {
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.colunaTimes button {
+    float: right;
+}
+
+.colunaTimes li {
+    text-decoration: none;
+    display: inline;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    text-transform: capitalize;
+    margin-left: 10px;
+    padding-bottom: 10px;
+}
+
+.inputTime {
+    background-color: white;
+    border: none;
+}
+
+
+.gerarPartidas {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border: none;
+    overflow: auto;
+    margin-left: 20px;
+}
+
+.partidasHead h1 {
+    height: 40px;
+    background-color: #1f2d3a;
+    color: white;
+    border: none;
+    margin: 0;
+    font-size: 24px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+
+}
+
+.gerarPartidas .btnGerar {
+    text-align: center;
+    margin: 10px;
+}
+
+.btn {
+    background-color: #FFC300;
+    border: none;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.numerosContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.colunaGeradaPar,
+.colunaGeradaImpar {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.colunaGeradaPar {
+    width: 100px;
+    height: auto;
+    margin: 12px;
+    padding: 0;
+    display: block;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.colunaGeradaPar img {
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.colunaGeradaPar li {
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    text-transform: capitalize;
+}
+
+
+.colunaGeradaImpar {
+    width: 100px;
+    height: auto;
+    margin: 12px;
+    padding: 0;
+    display: block;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.colunaGeradaImpar img{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.colunaGeradaImpar li{
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    text-transform: capitalize;
+}
