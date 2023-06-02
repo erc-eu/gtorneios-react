@@ -257,3 +257,30 @@
     font-weight: bolder;
     text-transform: capitalize;
 }
+
+
+
+.filterTimes{
+    margin: 5px;
+    width: 50%;
+    height: 20px;
+    text-align: center;
+}
+
+.input-icons i {
+    position: absolute;
+    
+}
+
+.input-icons {
+    width: 100%;
+    text-align: center;
+   
+}
+.icon {
+    padding: 1px;
+    margin: 5px;
+    color: black;
+  
+}
+

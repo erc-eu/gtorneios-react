@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MenuLogado from '../MenuLogado';
 import './AddTimes.css';
 import axios from 'axios';
-
+import SearchIcon from '@mui/icons-material/Search';
 const AddTimes = (props) => {
     const torneioId = props.match.params.id;
     const [qtdTimes, setQtdTimes] = useState(0);
@@ -17,7 +17,8 @@ const AddTimes = (props) => {
     const [tImpar, setImpar] = useState([]);
 
 
-    const [mostrarBotao, setMostrarBotao] = useState(true);
+    const [mostrarBotao, setMostrarBotao] = useState(false);
+    const [mostrarBotaoDelete, setMostrarBotaoDelete] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('usuario');
@@ -25,27 +26,32 @@ const AddTimes = (props) => {
             headers: { Authorization: `Basic ${token}` }
         };
         axios.get(`http://localhost:8080/api/torneio/${torneioId}`, config).then(res => {
-
             setQtdTimes(res.data.qtdDeTimes);
+        }).catch(error => {
+            console.error("Erro ao obter Torneio", error);
         });
-        axios.get(`http://localhost:8080/api/time/${torneioId}`, config)
-            .then(res => {
-                setPego(res.data);
-                setQtd(res.data.length);
-            })
-            .catch(error => {
-                console.error('Erro ao obter o torneio:', error);
-            });
-        axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
+        axios.get(`http://localhost:8080/api/time/${torneioId}`, config).then(res => {
             console.log(res);
-            if (res.data[0] == null) {
-                setMostrarBotao(true);
-            } else {
-                setMostrarBotao(false);
-                separarNumerosParesImpares(res.data);
-                console.log(res.data);
-            }
-        })
+            setTimeSalvo(res.data);
+            setQtd(res.data.length);
+        }).catch(error => {
+            console.error('Erro ao obter o Time :', error);
+        });
+        if (tPar && tImpar == '') {
+            setMostrarBotao(true);
+            setMostrarBotaoDelete(true);
+            axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
+
+                if (res.data[0] == null) {
+
+                } else {
+                    setMostrarBotao(false);
+                    setMostrarBotaoDelete(false);
+                    separarNumerosParesImpares(res.data);
+
+                }
+            })
+        }
 
     }, [torneioId]);
 
@@ -90,13 +96,13 @@ const AddTimes = (props) => {
 
         axios.post(`http://localhost:8080/api/time/${torneioId}`, novoTime, config)
             .then(result => {
+                setTimeSalvo([...timeSalvo, result.data]);
                 console.log(result);
             })
             .catch(err => {
                 console.log(err);
             });
 
-        setTimeSalvo([...timeSalvo, novoTime]);
         setNome('');
         setAbreviacao('');
         setImagem('');
@@ -106,7 +112,7 @@ const AddTimes = (props) => {
 
     const sortear = (event) => {
         event.preventDefault();
-        if (qtdTimes != qtd) {
+        if (qtdTimes !== qtd) {
             alert("Preencha com todos os times para criar um mata-mata");
             return;
         }
@@ -114,6 +120,7 @@ const AddTimes = (props) => {
         const config = {
             headers: { Authorization: `Basic ${token}` }
         };
+
         axios.get(`http://localhost:8080/api/time/${torneioId}`, config)
             .then(res => {
                 const times = res.data;
@@ -130,17 +137,54 @@ const AddTimes = (props) => {
                     }
                 });
 
+                const partidas = timesPares.map((time, index) => ({
+                    time1: time,
+                    time2: timesImpares[index]
+                }));
+                console.log(partidas);
+                axios.post('http://localhost:8080/api/partida', partidas, config)
+                    .then(res => {
+                        axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
 
-                axios.post('http://localhost:8080/api/partida', { time1: timesImpares, time2: timesPares }, config).then(res => {
+                            if (res.data[0] == null) {
 
-                });
-                setPar(timesPares);
-                setImpar(timesImpares);
+                            } else {
+                                setMostrarBotao(false);
+                                setMostrarBotaoDelete(false);
+                                separarNumerosParesImpares(res.data);
+
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        console.error('Erro ao criar as partidas:', error);
+                    });
             })
             .catch(error => {
                 console.error('Erro ao obter os times:', error);
             });
-        setMostrarBotao(false);
+    };
+
+    const deleteTime = (codTime) => {
+        console.log(codTime);
+        const token = localStorage.getItem('usuario');
+        const config = {
+            headers: { Authorization: `Basic ${token}` }
+        };
+        console.log(codTime);
+        axios.delete(`http://localhost:8080/api/time/${codTime}`, config)
+            .then(res => {
+                console.log(res);
+                setTimeSalvo(prevTimes => prevTimes.filter(time => time.codTime !== codTime));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        setQtd(qtd - 1);
+    };
+
+    const filterTeams = (e) =>{
+        
     }
     return (
         <div>
@@ -183,17 +227,18 @@ const AddTimes = (props) => {
                     </form>
 
                     <div className='coluna1'>
+                        <div className='input-icons'>
+                            <i className="icon"><SearchIcon /></i>
+                            <input className='filterTimes' type="text" onChange={filterTeams} />
+                        </div>
                         <div className='colunaT'>
-                            {timePego.map((timePego, i) => (
-                                <div className='colunaTimes' key={i}>
-                                    <img src={timePego.imagemDoEscudo} />
-                                    <li>{timePego.nome}</li>
-                                </div>
-                            ))}
                             {timeSalvo.map((time, index) => (
                                 <div className='colunaTimes' key={index}>
                                     <img src={time.imagemDoEscudo} />
                                     <li>{time.nome}</li>
+                                    {mostrarBotaoDelete && (
+                                        <button onClick={() => deleteTime(time.codTime)}>Delete</button>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -216,6 +261,7 @@ const AddTimes = (props) => {
                                         <img src={tPar.imagemDoEscudo} alt='Escudo' />
                                         <li>{tPar.nome}</li>
                                     </div>
+                                    <h1>-</h1>
                                     {tImpar[i] && (
                                         <div className='colunaGeradaImpar'>
                                             <img src={tImpar[i].imagemDoEscudo} alt='Escudo' />

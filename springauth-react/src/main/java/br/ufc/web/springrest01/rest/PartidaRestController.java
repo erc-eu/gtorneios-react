@@ -1,13 +1,13 @@
 package br.ufc.web.springrest01.rest;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,10 +57,9 @@ public class PartidaRestController {
                         timesDaPartida.add(partida.getTime1());
                         timesDaPartida.add(partida.getTime2());
                     }
-                }else{
+                } else {
                     return null;
                 }
-
             }
             return timesDaPartida;
         } else {
@@ -69,27 +68,43 @@ public class PartidaRestController {
     }
 
     @PostMapping
-    Partida addPartida(@RequestBody Map<String, List<Time>> timesMap) {
-        List<Time> timesPares = timesMap.get("time2");
-        List<Time> timesImpares = timesMap.get("time1");
+    List<Time> addPartida(@RequestBody List<Map<String, Time>> partidasMap) {
+        List<Time> timesDaPartida = new ArrayList<>();
 
-        if (timesPares.size() == timesImpares.size()) {
-            for (int i = 0; i < timesPares.size(); i++) {
-                Partida partida = new Partida();
-                Time timePar = timesPares.get(i);
-                Time timeImpar = timesImpares.get(i);
+        for (Map<String, Time> partidaMap : partidasMap) {
+            Time time1 = partidaMap.get("time1");
+            Time time2 = partidaMap.get("time2");
 
-                partida.setTime1(timePar);
-                partida.setTime2(timeImpar);
-                partida.setDataHora(LocalDateTime.now());
-                partida.setEstatisticas("null");
-                partida.setMomentoDaPontuacao("null");
-                partida.setPlacar("asd");
-                partida.setLocal("null");
-                partidaRepository.save(partida);
-            }
+            Partida partida = new Partida();
+            partida.setTime1(time1);
+            partida.setTime2(time2);
 
+            partidaRepository.save(partida);
+
+            timesDaPartida.add(time1);
+            timesDaPartida.add(time2);
         }
-        return null;
+
+        return timesDaPartida;
+    }
+
+    @DeleteMapping(path = { "/{id}" })
+    String delete(@PathVariable Integer id) {
+        Optional<Time> t = timeRepository.findById(id);
+        List<Partida> p1 = partidaRepository.findByTime1(t.get());
+        List<Partida> p2 = partidaRepository.findByTime2(t.get());
+        if (p1 != null) {
+            for (Partida p : p1) {
+                partidaRepository.delete(p);
+            }
+        }
+        if (p2 != null) {
+            for (Partida p : p2) {
+                partidaRepository.delete(p);
+            }
+        }
+
+        timeRepository.deleteById(id);
+        return "Deleted";
     }
 }

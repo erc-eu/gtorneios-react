@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import MenuLogado from "../../layout/MenuLogado";
 import './UserAlterar.css'
 import axios from "axios";
 import { useEffect } from "react";
 import AvartarAlterar from "./AvatarAlterar";
+import { Redirect } from "react-router-dom";
 
 const UserAlterar = () => {
 
@@ -20,6 +21,7 @@ const UserAlterar = () => {
         axios.get('http://localhost:8080/api/user/me', config).then(result => {
             setEmailUpdate(result.data.principal.email)
             setId(result.data.principal.id);
+            console.log(userId);
         })
     }, []);
 
@@ -51,6 +53,27 @@ const UserAlterar = () => {
         event.preventDefault();
     }
 
+    if(!localStorage.getItem("usuario")){
+        return <Redirect to="/" />
+    }
+    const deleteAccount = (e) => {
+        const token = localStorage.getItem('usuario');
+        const config = {
+            headers: { Authorization: `Basic ${token}` }
+        };
+
+        axios.delete(`http://localhost:8080/api/user/${e}`, config)
+            .then(res => {
+                console.log(res);
+                // Processar resposta de sucesso aqui, se necessário
+            })
+            .catch(error => {
+                console.error(error);
+                // Tratar erros aqui
+            });
+            localStorage.clear();
+            window.location.reload();
+    };
     return (
         <div>
             <MenuLogado />
@@ -82,6 +105,9 @@ const UserAlterar = () => {
                 </div>
                 <button type="submit">save</button>
             </form>
+            <div className="delDiv">
+                <button className="del" onClick={() => deleteAccount(userId)}>Delete Account</button>
+            </div>
         </div>
     )
 }

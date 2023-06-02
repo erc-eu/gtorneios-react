@@ -82,7 +82,10 @@
     cursor: pointer;
 
 }
-
+.error-message{
+    font-size: 18px;
+    color: rgb(241, 81, 81);
+}
 h2 {
     font-family: cursive;
 }

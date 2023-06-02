@@ -2,6 +2,7 @@ package br.ufc.web.springrest01.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,20 +13,26 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Time {
+    // ...
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codTime;
     private String nome;
     private String imagemDoEscudo;
     private String abreviacao;
-    @OneToMany (mappedBy = "time")
-    private List<Competidor> competidores;
+
+    @OneToMany(mappedBy = "time1", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Partida> partidasComoTime1;
+
+    @OneToMany(mappedBy = "time2", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Partida> partidasComoTime2;
+
     @ManyToOne
     private Torneio torneioCod;
-    private boolean vencedor ;
-   
+    private boolean vencedor;
 
-    
+     
     public int getCodTime() {
         return codTime;
     }
@@ -50,12 +57,7 @@ public class Time {
     public void setAbreviacao(String abreviacao) {
         this.abreviacao = abreviacao;
     }
-    public List<Competidor> getCompetidores() {
-        return competidores;
-    }
-    public void setCompetidores(List<Competidor> competidores) {
-        this.competidores = competidores;
-    }
+
     public Torneio getTorneioCod() {
         return torneioCod;
     }
@@ -68,7 +70,6 @@ public class Time {
     public void setVencedor(boolean vencedor) {
         this.vencedor = vencedor;
     }
-
 
     
 }

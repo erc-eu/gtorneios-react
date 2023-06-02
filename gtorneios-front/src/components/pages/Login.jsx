@@ -41,7 +41,7 @@ const Login = () => {
         axios.get('http://localhost:8080/api/user/me', config)
             .then(response => {
                 localStorage.setItem('usuario', btoa(username + ':' + password));
-                Location.reload();
+                window.location.reload();
             })
             .catch(error => {
                 setErrorMessage('Usuário ou senha inválidos');

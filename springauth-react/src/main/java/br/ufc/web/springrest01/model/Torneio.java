@@ -2,6 +2,7 @@ package br.ufc.web.springrest01.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Torneio {
     private String esporte;
     @ManyToOne
     private User organizador;
-    @OneToMany(mappedBy = "torneioCod")
+    @OneToMany(mappedBy = "torneioCod", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Time> times;
 
 

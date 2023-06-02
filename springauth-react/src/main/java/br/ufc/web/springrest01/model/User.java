@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String avatar;
-    @OneToMany(mappedBy = "organizador")
+    @OneToMany(mappedBy = "organizador",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Torneio> torneiosCriados;
 
     public User() {

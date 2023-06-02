@@ -47,7 +47,25 @@
     color: white;
     font-size: 16px;
 }
-
+.delDiv{
+    text-align: center;
+    margin-top: 10px;
+}
+.del{
+    display: inline-block;
+    width: 150px;
+    padding: 5px;
+    background-color: rgba(103, 161, 10, 0);
+    border: 1px solid #ca040e ;
+    color: #ffffff ;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.del:hover {
+    color: #ffffff ;
+    background-color: #d40303;
+}
 .alterar-form button[type='submit'] {
     display: flex;
     width: 50%;
