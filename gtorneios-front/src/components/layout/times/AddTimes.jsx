@@ -3,6 +3,8 @@ import MenuLogado from '../MenuLogado';
 import './AddTimes.css';
 import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
+import unidecode from 'unidecode';
+import Modal from 'react-modal';
 const AddTimes = (props) => {
     const torneioId = props.match.params.id;
     const [qtdTimes, setQtdTimes] = useState(0);
@@ -16,9 +18,15 @@ const AddTimes = (props) => {
     const [tPar, setPar] = useState([]);
     const [tImpar, setImpar] = useState([]);
 
-
+    //botões DELETE E GERAR PARTIDA
     const [mostrarBotao, setMostrarBotao] = useState(false);
     const [mostrarBotaoDelete, setMostrarBotaoDelete] = useState(false);
+
+
+    //Modal
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedTime, setSelectedTime] = useState(null);
+
 
     useEffect(() => {
         const token = localStorage.getItem('usuario');
@@ -33,6 +41,7 @@ const AddTimes = (props) => {
         axios.get(`http://localhost:8080/api/time/${torneioId}`, config).then(res => {
             console.log(res);
             setTimeSalvo(res.data);
+            setFilteredData(res.data);
             setQtd(res.data.length);
         }).catch(error => {
             console.error('Erro ao obter o Time :', error);
@@ -70,6 +79,8 @@ const AddTimes = (props) => {
         setPar(pares);
         setImpar(impares);
     };
+
+
     const salvar = (event) => {
 
         event.preventDefault();
@@ -97,6 +108,8 @@ const AddTimes = (props) => {
         axios.post(`http://localhost:8080/api/time/${torneioId}`, novoTime, config)
             .then(result => {
                 setTimeSalvo([...timeSalvo, result.data]);
+                setFilteredData([...filteredData, result.data]);
+                console.log()
                 console.log(result);
             })
             .catch(err => {
@@ -110,8 +123,11 @@ const AddTimes = (props) => {
     };
 
 
+    //SORTEAR PARTIDAS
     const sortear = (event) => {
         event.preventDefault();
+        setMostrarBotao(false);
+        setMostrarBotaoDelete(false);
         if (qtdTimes !== qtd) {
             alert("Preencha com todos os times para criar um mata-mata");
             return;
@@ -145,14 +161,9 @@ const AddTimes = (props) => {
                 axios.post('http://localhost:8080/api/partida', partidas, config)
                     .then(res => {
                         axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
-
                             if (res.data[0] == null) {
-
                             } else {
-                                setMostrarBotao(false);
-                                setMostrarBotaoDelete(false);
                                 separarNumerosParesImpares(res.data);
-
                             }
                         })
                     })
@@ -165,6 +176,9 @@ const AddTimes = (props) => {
             });
     };
 
+
+
+    //DELETAR TIME
     const deleteTime = (codTime) => {
         console.log(codTime);
         const token = localStorage.getItem('usuario');
@@ -176,6 +190,8 @@ const AddTimes = (props) => {
             .then(res => {
                 console.log(res);
                 setTimeSalvo(prevTimes => prevTimes.filter(time => time.codTime !== codTime));
+                setFilteredData(prevTimes => prevTimes.filter(time => time.codTime !== codTime));
+
             })
             .catch(err => {
                 console.log(err);
@@ -183,9 +199,76 @@ const AddTimes = (props) => {
         setQtd(qtd - 1);
     };
 
-    const filterTeams = (e) =>{
-        
+    const [inputValue, setInputValue] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
+
+    //BUSCAR TIMES
+    const filterTeams = (event) => {
+        if (event.target.value === '') {
+            setTimeSalvo(filteredData);
+            return;
+        }
+
+        const value = event.target.value.toLowerCase();
+        setInputValue(value);
+
+        const filtered = timeSalvo.filter((item) => {
+            const itemName = unidecode(item.nome.toLowerCase());
+            return itemName.includes(value);
+        });
+
+        setTimeSalvo(filtered);
     }
+    //ABRIR e FECHAR MODAL
+    const openModal = (time) => {
+        setSelectedTime(time);
+        console.log(selectedTime);
+        setModalIsOpen(true);
+    };
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    //Editar Time
+    const [nomeTime, setNomeTime] = useState('');
+    const [abrev, setAbrev] = useState('');
+    const [imgShield, setImgShield] = useState('');
+
+    const editarTime = (codTime) => {
+        const time = {
+          nome: nomeTime,
+          abreviacao: abrev,
+          imagemDoEscudo: imgShield
+        };
+      
+        const updatedTimeSalvo = timeSalvo.map((timeObj) => {
+          if (timeObj.codTime === codTime) {
+            return {
+              ...timeObj,
+              ...time
+            };
+          }
+          return timeObj;
+        });
+      
+        setTimeSalvo(updatedTimeSalvo);
+        setFilteredData(updatedTimeSalvo);
+        const token = localStorage.getItem('usuario');
+        const config = {
+          headers: { Authorization: `Basic ${token}` }
+        };
+        
+        axios.put(`http://localhost:8080/api/time/${codTime}`, time, config)
+          .then(res => {
+            console.log('Time atualizado:', res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+          setNomeTime('');
+          setAbrev('');
+          setImgShield('');
+      };
     return (
         <div>
             <MenuLogado />
@@ -236,6 +319,38 @@ const AddTimes = (props) => {
                                 <div className='colunaTimes' key={index}>
                                     <img src={time.imagemDoEscudo} />
                                     <li>{time.nome}</li>
+                                    <button onClick={() => openModal(time)}>Edit</button>
+                                    <Modal
+                                        isOpen={modalIsOpen}
+                                        onRequestClose={closeModal}
+                                        style={{
+                                            content: {
+                                              width: '300px',
+                                              height: '300px',
+                                              margin: 'auto',
+                                              // Add any other custom styles you need
+                                            },
+                                            overlay: {
+                                                backgroundColor: 'rgba(0, 0, 0, 0.2)', // Adjust the transparency here
+                                              },
+                                          }}
+                                    >
+                                        <button onClick={closeModal}>Fechar</button>
+                                        {selectedTime && (
+                                            <>
+                                                <h2>Editar Time</h2>
+                                                <h2>{selectedTime.nome}</h2>
+                                                <label htmlFor="">Nome Time </label><br></br>
+                                                <input type="text" value={nomeTime} onChange={(e) => setNomeTime(e.target.value)} /><br />
+                                                <label htmlFor="">Abreviacao </label><br></br>
+                                                <input type="text" value={abrev} onChange={(e) => setAbrev(e.target.value)} /><br />
+                                                <label htmlFor="">Imagem do Escudo </label><br />
+                                                <input type="text" value={imgShield} onChange={(e) => setImgShield(e.target.value)} /><br /><br />
+                                            </>
+                                        )}
+                                        <button onClick={() => editarTime(selectedTime.codTime)}>Salvar Edição</button>
+
+                                    </Modal>
                                     {mostrarBotaoDelete && (
                                         <button onClick={() => deleteTime(time.codTime)}>Delete</button>
                                     )}

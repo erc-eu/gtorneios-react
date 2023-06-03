@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,19 @@ public class TimeRestController {
     String delTime(@PathVariable Integer id){
         timeRepository.deleteById(id);
         return "Time Deletado";
+    }
+
+    @PutMapping(path = {"/{id}"})
+    Optional<Time> putTime(@PathVariable Integer id, @RequestBody Time info){
+        Optional<Time> t = timeRepository.findById(id);
+        if(t.isPresent()){
+            Time tAlt = t.get();
+            tAlt.setNome(info.getNome());
+            tAlt.setAbreviacao(info.getAbreviacao());
+            tAlt.setImagemDoEscudo(info.getImagemDoEscudo());
+            timeRepository.save(tAlt);
+            return t;
+        }
+        return null;
     }
 }
