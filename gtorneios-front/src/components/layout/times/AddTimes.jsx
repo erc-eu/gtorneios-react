@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MenuLogado from '../MenuLogado';
 import './AddTimes.css';
 import axios from 'axios';
@@ -15,19 +15,24 @@ const AddTimes = (props) => {
     const [abreviacao, setAbreviacao] = useState('');
     const [imagem, setImagem] = useState('');
 
+    const [timesDaPartida, setTimesDaPartida] = useState([]);
+
     const [tPar, setPar] = useState([]);
     const [tImpar, setImpar] = useState([]);
 
     //botões DELETE E GERAR PARTIDA
     const [mostrarBotao, setMostrarBotao] = useState(false);
     const [mostrarBotaoDelete, setMostrarBotaoDelete] = useState(false);
-
+    const [mostraBotaoRodada, setMostrarBotaoRodada] = useState(false);
+    const [mostrarBotaoEdit, setMostrarBotaoEdit] = useState(false);
 
     //Modal
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedTime, setSelectedTime] = useState(null);
 
 
+    //useRef
+    const inputBusca = useRef(null)
     useEffect(() => {
         const token = localStorage.getItem('usuario');
         const config = {
@@ -39,7 +44,6 @@ const AddTimes = (props) => {
             console.error("Erro ao obter Torneio", error);
         });
         axios.get(`http://localhost:8080/api/time/${torneioId}`, config).then(res => {
-            console.log(res);
             setTimeSalvo(res.data);
             setFilteredData(res.data);
             setQtd(res.data.length);
@@ -47,15 +51,25 @@ const AddTimes = (props) => {
             console.error('Erro ao obter o Time :', error);
         });
         if (tPar && tImpar == '') {
-            setMostrarBotao(true);
-            setMostrarBotaoDelete(true);
+
             axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
-
+                console.log(res.data);
+                console.log("AQUI");
                 if (res.data[0] == null) {
-
+                    setMostrarBotao(true);
+                    setMostrarBotaoDelete(true);
+                    setMostrarBotaoEdit(true);
+                    setMostrarBotaoRodada(false);
                 } else {
                     setMostrarBotao(false);
                     setMostrarBotaoDelete(false);
+                    setMostrarBotaoEdit(false);
+                    if (res.data.length == 1) {
+                        setMostrarBotaoRodada(false);
+                    } else {
+                        setMostrarBotaoRodada(true);
+                    }
+                    setTimesDaPartida(res.data);
                     separarNumerosParesImpares(res.data);
 
                 }
@@ -64,10 +78,12 @@ const AddTimes = (props) => {
 
     }, [torneioId]);
 
+    const focusBusca = () => {
+        inputBusca.current.focus();
+    }
     const separarNumerosParesImpares = (partidas) => {
         const pares = [];
         const impares = [];
-
         partidas.forEach((partida, index) => {
             if (index % 2 === 0) {
                 pares.push(partida);
@@ -108,6 +124,7 @@ const AddTimes = (props) => {
         axios.post(`http://localhost:8080/api/time/${torneioId}`, novoTime, config)
             .then(result => {
                 setTimeSalvo([...timeSalvo, result.data]);
+                setTimesDaPartida([...timesDaPartida, result.data]);
                 setFilteredData([...filteredData, result.data]);
                 console.log()
                 console.log(result);
@@ -126,12 +143,14 @@ const AddTimes = (props) => {
     //SORTEAR PARTIDAS
     const sortear = (event) => {
         event.preventDefault();
-        setMostrarBotao(false);
-        setMostrarBotaoDelete(false);
         if (qtdTimes !== qtd) {
             alert("Preencha com todos os times para criar um mata-mata");
             return;
         }
+        setMostrarBotao(false);
+        setMostrarBotaoDelete(false);
+        setMostrarBotaoEdit(false);
+        setMostrarBotaoRodada(true);
         const token = localStorage.getItem('usuario');
         const config = {
             headers: { Authorization: `Basic ${token}` }
@@ -164,6 +183,7 @@ const AddTimes = (props) => {
                             if (res.data[0] == null) {
                             } else {
                                 separarNumerosParesImpares(res.data);
+                                setTimesDaPartida(res.data);
                             }
                         })
                     })
@@ -180,12 +200,10 @@ const AddTimes = (props) => {
 
     //DELETAR TIME
     const deleteTime = (codTime) => {
-        console.log(codTime);
         const token = localStorage.getItem('usuario');
         const config = {
             headers: { Authorization: `Basic ${token}` }
         };
-        console.log(codTime);
         axios.delete(`http://localhost:8080/api/time/${codTime}`, config)
             .then(res => {
                 console.log(res);
@@ -199,7 +217,6 @@ const AddTimes = (props) => {
         setQtd(qtd - 1);
     };
 
-    const [inputValue, setInputValue] = useState('');
     const [filteredData, setFilteredData] = useState([]);
 
     //BUSCAR TIMES
@@ -210,7 +227,7 @@ const AddTimes = (props) => {
         }
 
         const value = event.target.value.toLowerCase();
-        setInputValue(value);
+
 
         const filtered = timeSalvo.filter((item) => {
             const itemName = unidecode(item.nome.toLowerCase());
@@ -222,7 +239,6 @@ const AddTimes = (props) => {
     //ABRIR e FECHAR MODAL
     const openModal = (time) => {
         setSelectedTime(time);
-        console.log(selectedTime);
         setModalIsOpen(true);
     };
     const closeModal = () => {
@@ -236,39 +252,143 @@ const AddTimes = (props) => {
 
     const editarTime = (codTime) => {
         const time = {
-          nome: nomeTime,
-          abreviacao: abrev,
-          imagemDoEscudo: imgShield
+            nome: nomeTime,
+            abreviacao: abrev,
+            imagemDoEscudo: imgShield
         };
-      
+
         const updatedTimeSalvo = timeSalvo.map((timeObj) => {
-          if (timeObj.codTime === codTime) {
-            return {
-              ...timeObj,
-              ...time
-            };
-          }
-          return timeObj;
+            if (timeObj.codTime === codTime) {
+                return { ...timeObj, ...time };
+            }
+            return timeObj;
         });
-      
+
         setTimeSalvo(updatedTimeSalvo);
         setFilteredData(updatedTimeSalvo);
         const token = localStorage.getItem('usuario');
         const config = {
-          headers: { Authorization: `Basic ${token}` }
+            headers: { Authorization: `Basic ${token}` }
         };
-        
+
         axios.put(`http://localhost:8080/api/time/${codTime}`, time, config)
-          .then(res => {
-            console.log('Time atualizado:', res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-          setNomeTime('');
-          setAbrev('');
-          setImgShield('');
-      };
+            .then(res => {
+                console.log('Time atualizado:', res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        setNomeTime('');
+        setAbrev('');
+        setImgShield('');
+    };
+
+
+    const gerarPlacar = (time1, time2) => {
+        if (timesDaPartida.length == 1) {
+            return null;
+        }
+        // Código para gerar um placar aleatório entre os times
+        let placarTime1;
+        let placarTime2;
+        do {
+            placarTime1 = Math.floor(Math.random() * 5);
+            placarTime2 = Math.floor(Math.random() * 5);
+        } while (placarTime1 === placarTime2);
+
+        if (placarTime1 > placarTime2) {
+            //console.log("Time1:" + placarTime1);
+            //console.log("Time2:" + placarTime2);
+            setTimesDaPartida(prevTimes => prevTimes.filter(time => time.codTime !== time2.codTime));
+            //retorna o time perdedor
+            return {
+                timePerdedor: time2,
+                placar: `${time1.nome}: ${placarTime1} - ${time2.nome}: ${placarTime2}`,
+                timeGanhador: time1
+            };
+        }
+        if (placarTime1 < placarTime2) {
+            //console.log("Time1:" + placarTime1);
+            //console.log("Time2:" + placarTime2);
+            setTimesDaPartida(prevTimes => prevTimes.filter(time => time.codTime !== time1.codTime));
+            //retorna o time perdedor
+            return {
+                timePerdedor: time1,
+                placar: `${time1.nome}: ${placarTime1} - ${time2.nome}: ${placarTime2}`,
+                timeGanhador: time2
+            };
+        }
+    };
+    const timesPassaram = (p) => {
+        const token = localStorage.getItem('usuario');
+        const config = {
+            headers: { Authorization: `Basic ${token}` },
+        };
+        const timesPares = [];
+        const timesImpares = [];
+
+        p.forEach((t, index) => {
+            if (index % 2 === 0) {
+                timesPares.push(t);
+            } else {
+                timesImpares.push(t);
+            }
+        });
+        const partidas = timesPares.map((time, index) => ({
+            time1: time,
+            time2: timesImpares[index],
+        }));
+        axios.post('http://localhost:8080/api/partida', partidas, config)
+            .then(res => {
+
+            })
+            .catch(error => {
+                console.error('Erro ao criar as partidas:', error);
+            });
+    }
+
+    const rodada = () => {
+        setMostrarBotaoRodada(false);
+        const token = localStorage.getItem('usuario');
+        const config = {
+            headers: { Authorization: `Basic ${token}` },
+        };
+
+        let timesPassaramChamado = false; // Flag para verificar se a função timesPassaram já foi chamada
+
+        for (let i = 0; i < timesDaPartida.length - 1; i += 2) {
+            if (timesDaPartida.length === 1) {
+                break;
+            }
+            let time1 = timesDaPartida[i];
+            let time2 = timesDaPartida[i + 1];
+            let p = gerarPlacar(time1, time2);
+            let placar = {
+                placar: p.placar
+            }
+            axios.put(`http://localhost:8080/api/time/${p.timePerdedor.codTime}/${torneioId}`, placar, config)
+                .then((res) => {
+                    separarNumerosParesImpares(res.data);
+                    if (!timesPassaramChamado) {
+                        timesPassaram(res.data);
+                        timesPassaramChamado = true;
+                        setTimeout(() => {
+                            if (timesDaPartida.length == 2) {
+                                setMostrarBotaoRodada(false);
+                            } else {
+                                setMostrarBotaoRodada(true);
+                            }
+                        }, 1000); // Define o tempo de espera para reabilitar o botão em milissegundos (2 segundos neste exemplo)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setMostrarBotaoRodada(true);
+                });
+        }
+    };
+
+
     return (
         <div>
             <MenuLogado />
@@ -311,29 +431,31 @@ const AddTimes = (props) => {
 
                     <div className='coluna1'>
                         <div className='input-icons'>
-                            <i className="icon"><SearchIcon /></i>
-                            <input className='filterTimes' type="text" onChange={filterTeams} />
+                            <i className="icon" onClick={focusBusca}><SearchIcon /></i>
+                            <input className='filterTimes' ref={inputBusca} type="text" onChange={filterTeams} />
                         </div>
                         <div className='colunaT'>
                             {timeSalvo.map((time, index) => (
                                 <div className='colunaTimes' key={index}>
                                     <img src={time.imagemDoEscudo} />
                                     <li>{time.nome}</li>
-                                    <button onClick={() => openModal(time)}>Edit</button>
+                                    {mostrarBotaoEdit && (
+                                        <button onClick={() => openModal(time)}>Edit</button>
+                                    )}
                                     <Modal
                                         isOpen={modalIsOpen}
                                         onRequestClose={closeModal}
                                         style={{
                                             content: {
-                                              width: '300px',
-                                              height: '300px',
-                                              margin: 'auto',
-                                              // Add any other custom styles you need
+                                                width: '300px',
+                                                height: '300px',
+                                                margin: 'auto',
+                                                // Add any other custom styles you need
                                             },
                                             overlay: {
                                                 backgroundColor: 'rgba(0, 0, 0, 0.2)', // Adjust the transparency here
-                                              },
-                                          }}
+                                            },
+                                        }}
                                     >
                                         <button onClick={closeModal}>Fechar</button>
                                         {selectedTime && (
@@ -349,7 +471,6 @@ const AddTimes = (props) => {
                                             </>
                                         )}
                                         <button onClick={() => editarTime(selectedTime.codTime)}>Salvar Edição</button>
-
                                     </Modal>
                                     {mostrarBotaoDelete && (
                                         <button onClick={() => deleteTime(time.codTime)}>Delete</button>
@@ -366,6 +487,9 @@ const AddTimes = (props) => {
                                 <button className='btn' onClick={sortear}>
                                     Gerar Partidas
                                 </button>
+                            )}
+                            {mostraBotaoRodada && (
+                                <button className='btn' onClick={rodada}>Rodada</button>
                             )}
                         </div>
                         <div className='numerosContainer'>

@@ -267,20 +267,17 @@
     text-align: center;
 }
 
-.input-icons i {
-    position: absolute;
-    
-}
+
 
 .input-icons {
     width: 100%;
     text-align: center;
-   
+    position: relative;
+
 }
 .icon {
     padding: 1px;
     margin: 5px;
     color: black;
-  
 }
 

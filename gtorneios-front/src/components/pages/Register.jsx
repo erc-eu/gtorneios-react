@@ -3,6 +3,7 @@ import './styles/register.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Avartar from './user/AvatarAlterar';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -19,15 +20,16 @@ const Register = () => {
         console.log(user);
         axios.post("http://localhost:8080/api/user", user).then(result => {
             console.log(result)
-
         }).catch(err => {console(err)});
         console.log({ user });
         console.log(event.target.avatar.value);
         event.preventDefault();
-
+        window.location.href="/"
     };
 
-
+    const redirect = () =>{
+        return <Redirect to ="/"/>
+    }
 
     return (
         <div>
@@ -83,7 +85,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <button type="submit">Registrar</button>
+                <button type="submit" onClick={redirect}>Registrar</button>
                 <h4>já possui conta? <Link to={'/login'}>Conecte-se</Link></h4>
             </form>
         </div>

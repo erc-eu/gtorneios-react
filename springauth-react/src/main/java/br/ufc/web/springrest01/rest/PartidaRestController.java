@@ -1,9 +1,7 @@
 package br.ufc.web.springrest01.rest;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +20,7 @@ import br.ufc.web.springrest01.model.Torneio;
 import br.ufc.web.springrest01.repository.PartidaRepository;
 import br.ufc.web.springrest01.repository.TimeRepository;
 import br.ufc.web.springrest01.repository.TorneioRepository;
+
 
 @RestController
 @RequestMapping("/api/partida")
@@ -44,40 +44,55 @@ public class PartidaRestController {
     @GetMapping(path = { "/{id}" })
     List<Time> pegarTimesPartida(@PathVariable Integer id) {
         Optional<Torneio> torn = torneioRepository.findById(id);
-
         if (torn.isPresent()) { // Verifica se o torneio existe
-            List<Time> times = timeRepository.findByTorneioCod(torn);
+            List<Time> times = timeRepository.findByTorneioCodAndVencedor(torn, true);
             List<Time> timesDaPartida = new ArrayList<>();
 
             for (Time time : times) {
+                // List<Partida> partidasTime = partidaRepository.findDistinctByTime(time);
                 List<Partida> partidasTime1 = partidaRepository.findByTime1(time);
-                List<Partida> partidasTime2 = partidaRepository.findByTime2(time);
-                if (partidasTime1 != null && partidasTime2 != null) {
+        
+                // if(partidasTime.size() != 0){
+                //     for (Partida partida : partidasTime) {
+                //         if (partida.getTime1() != null && partida.getTime2() == null) {
+                //             timesDaPartida.clear();
+                //             timesDaPartida.add(partida.getTime1());
+                //             break;
+                //         }
+                //         if (partida.getTime1().isVencedor() && partida.getTime2().isVencedor()) {
+                //             timesDaPartida.add(partida.getTime1());
+                //             timesDaPartida.add(partida.getTime2());
+                //         }
+                //     }
+                //     break;
+                // }
+                if (partidasTime1 != null) {
                     for (Partida partida : partidasTime1) {
-                        timesDaPartida.add(partida.getTime1());
-                        timesDaPartida.add(partida.getTime2());
+                        if (partida.getTime1() != null && partida.getTime2() == null) {
+                            timesDaPartida.clear();
+                            timesDaPartida.add(partida.getTime1());
+                            break;
+                        }
+                        if (partida.getTime1().isVencedor() && partida.getTime2().isVencedor()) {
+                            timesDaPartida.add(partida.getTime1());
+                            timesDaPartida.add(partida.getTime2());
+                        }
                     }
-                } else {
-                    return null;
                 }
+
             }
             return timesDaPartida;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @PostMapping
-    List<Time> addPartida(@RequestBody List<Map<String, Time>> partidasMap) {
+    public List<Time> addPartida(@RequestBody List<Partida> partidas) {
         List<Time> timesDaPartida = new ArrayList<>();
 
-        for (Map<String, Time> partidaMap : partidasMap) {
-            Time time1 = partidaMap.get("time1");
-            Time time2 = partidaMap.get("time2");
-
-            Partida partida = new Partida();
-            partida.setTime1(time1);
-            partida.setTime2(time2);
+        for (Partida partida : partidas) {
+            Time time1 = partida.getTime1();
+            Time time2 = partida.getTime2();
 
             partidaRepository.save(partida);
 
@@ -87,6 +102,7 @@ public class PartidaRestController {
 
         return timesDaPartida;
     }
+
 
     @DeleteMapping(path = { "/{id}" })
     String delete(@PathVariable Integer id) {
