@@ -129,8 +129,8 @@
 }
 
 .colunaTimes img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin: 3px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -158,7 +158,7 @@
 
 
 .gerarPartidas {
-    width: 300px;
+    width: 400px;
     height: 400px;
     background-color: white;
     border: none;
@@ -197,25 +197,28 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
 .colunaGeradaPar,
 .colunaGeradaImpar {
-  width: 50%;
-  padding: 10px;
-  box-sizing: border-box;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
+
 .colunaGeradaPar {
-    width: 100px;
+    width: 150px;
     height: auto;
     margin: 12px;
     padding: 0;
     display: block;
+    text-align: center;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
 }
 
 .colunaGeradaPar img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin: 3px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -223,47 +226,75 @@
 
 .colunaGeradaPar li {
     text-decoration: none;
-    display: flex;
     font-size: 16px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bolder;
     text-transform: capitalize;
+    list-style-type: none;
+
 }
 
 
 .colunaGeradaImpar {
-    width: 100px;
+    width: 150px;
     height: auto;
     margin: 12px;
     padding: 0;
     display: block;
+    text-align: center;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
 
-.colunaGeradaImpar img{
-    width: 30px;
-    height: 30px;
+.colunaGeradaImpar img {
+    width: 35px;
+    height: 35px;
     margin: 3px;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.colunaGeradaImpar li{
+.colunaGeradaImpar li {
     text-decoration: none;
-    display: flex;
     font-size: 16px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bolder;
     text-transform: capitalize;
+    list-style-type: none;
+
 }
 
+.numerosContainer .historico {
+    width: 60%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: transparent;
+    text-align: center;
+}
 
+.numerosContainer .historico button {
+    width: 240px;
+    color: white;
+    background-color: #294554;
+    font-size: 15px;
+    padding: 6px;
+    font-weight: bolder;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid black;
+}
 
-.filterTimes{
+.numerosContainer .historico button:hover {
+    transition: 0.5s;
+    background-color: #d15502;
+
+}
+
+.filterTimes {
     margin: 5px;
     width: 50%;
-    height: 20px;
+    height: 22px;
     text-align: center;
 }
 
@@ -275,9 +306,170 @@
     position: relative;
 
 }
+
 .icon {
     padding: 1px;
     margin: 5px;
     color: black;
 }
 
+.AlterarConfroto {
+    width: 300px;
+    text-align: center;
+}
+
+.AlterarConfroto button {
+    background-color: #294554;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.alterH3EditPartida {
+    font-size: 17px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+
+.editPartidas {
+    text-align: center;
+}
+
+.colunaEditPartida {
+    width: auto;
+    height: auto;
+    margin: 12px;
+    padding: 0;
+    display: block;
+    text-align: center;
+    border-top: 3px double #294554;
+    border-left: 3px double #294554;
+    border-bottom: 3px double #294554;
+    border-right: 3px double #294554;
+}
+
+.selectPartida {
+    background-color: #294554;
+    color: #FFC300;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+}
+
+.colunaEditPartida img {
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    margin: 5px 50px 5px 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.addIncon {
+    background-color: #1f2d3a;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-right: 1px;
+}
+
+.addIncon:hover {
+    color: greenyellow;
+}
+
+.addInconEdit {
+    background-color: #1f2d3a;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-right: 1px;
+}
+
+.addInconEdit:hover {
+    color: #FFC300;
+}
+
+.addInconDelete {
+    background-color: #1f2d3a;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-right: 1px;
+}
+
+.addInconDelete:hover {
+    color: red;
+}
+
+.inputEditTime {
+    width: 200px;
+    color: white;
+    background-color: #1e2b36;
+    border: none;
+    padding: 5px;
+    font-weight: bolder;
+    margin: 3px;
+}
+.labelEditTime{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.modalEditTime{
+    text-align: center;
+}
+.imgEditTime{
+    width: 35px;
+    height: 35px;
+    margin: 3px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.h2EditTime{
+    margin: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px dashed black ;
+}
+.fecharEditTimeButton{
+    width: 60px;
+    color: white;
+    background-color: #1e2b36;
+    border: none;
+    padding: 5px;
+    font-weight: bolder;
+    margin: 3px;
+    float: left;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.fecharEditTimeButton:hover{
+    color: red;
+    transition: 0.3s;
+}
+.salvarEditTimeButton{
+    color: white;
+    background-color: #1e2b36;
+    border: none;
+    padding: 5px;
+    font-weight: bolder;
+    margin: 3px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.salvarEditTimeButton:hover{
+    color: greenyellow;
+    transition: 0.3s;
+}
+.divEditTime{
+    margin-top: 40px;
+    border-top: 2px dashed black;
+}

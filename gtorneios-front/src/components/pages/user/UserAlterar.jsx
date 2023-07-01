@@ -103,7 +103,7 @@ const UserAlterar = () => {
                         required
                     />
                 </div>
-                <button type="submit">save</button>
+                <button type="submit">Save</button>
             </form>
             <div className="delDiv">
                 <button className="del" onClick={() => deleteAccount(userId)}>Delete Account</button>

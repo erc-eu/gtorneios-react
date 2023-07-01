@@ -28,6 +28,9 @@ public class Time {
     @OneToMany(mappedBy = "time2", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Partida> partidasComoTime2;
 
+    @OneToMany(mappedBy = "competidorDoTime", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Competidor> competidor;
+
     @ManyToOne
     private Torneio torneioCod;
     private boolean vencedor;

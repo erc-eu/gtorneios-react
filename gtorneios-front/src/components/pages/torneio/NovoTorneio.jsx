@@ -60,9 +60,12 @@ const NovoTorneio = () => {
             headers: { Authorization: `Basic ${token}` }
         };
         axios.post("http://localhost:8080/api/torneio/" + user + "", torneio, config).then(result => {
-            console.log(result)
+            
+            console.log(result);
         }).catch(err => { console.error("erro", err) });
         event.preventDefault();
+        window.location.href="/";
+
     }
 
     return (

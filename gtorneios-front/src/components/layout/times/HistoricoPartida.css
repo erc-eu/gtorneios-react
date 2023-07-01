@@ -1,0 +1,21 @@
+.colunaHistorico {
+    width: 350px;
+    height: auto;
+    margin: 12px;
+    padding: 0;
+    display: block;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.colunaHistorico img {
+    width: 30px;
+    height: 30px;
+    margin: 9px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

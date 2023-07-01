@@ -1,5 +1,6 @@
 package br.ufc.web.springrest01.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,28 +74,27 @@ public class TimeRestController {
 
     @PutMapping(path = { "/{id}/{codTorneio}" })
     List<Time> eliminarTime(@PathVariable Integer id, @PathVariable Integer codTorneio, @RequestBody Partida str) {
-        Optional<Time> time = timeRepository.findById(id);
-        Optional<Torneio> torn = torneioRepository.findById(codTorneio);
-        List<Partida> p1 = partidaRepository.findByTime1(time.get());
-        List<Partida> p2 = partidaRepository.findByTime2(time.get());
+        Optional<Time> timeOptional = timeRepository.findById(id);
+        Optional<Torneio> torneioOptional = torneioRepository.findById(codTorneio);
 
-        if (time.isPresent()) {
-            Time t = time.get();
-            t.setVencedor(false);
-            timeRepository.save(t);
-        }
-        if (p1 != null && p2 != null) {
-            for (Partida partida : p1) {
-                partida.setPlacar(str.getPlacar());
-                partidaRepository.save(partida);
-            }
-            for (Partida partida : p2) {
-                partida.setPlacar(str.getPlacar());
-                partidaRepository.save(partida);
+        if (timeOptional.isPresent()) {
+            Time time = timeOptional.get();
+            time.setVencedor(false);
+            timeRepository.save(time);
+
+            Optional<Partida> partidas = partidaRepository.findByTime1OrTime2(time);
+            if (partidas.isPresent() && partidas.get().getPlacar() == null) {
+                partidas.get().setPlacar(str.getPlacar());
+                partidas.get().setMomentoDaPontuacao(str.getMomentoDaPontuacao());
+                partidaRepository.save(partidas.get());
             }
         }
-        return timeRepository.findByTorneioCodAndVencedor(torn, true);
 
+        if (torneioOptional.isPresent()) {
+            return timeRepository.findByTorneioCodAndVencedor(torneioOptional, true);
+        } else {
+            return new ArrayList<>(); // Retorna uma lista vazia caso torneioOptional não esteja presente
+        }
     }
 
     @PutMapping(path = { "/{id}" })
