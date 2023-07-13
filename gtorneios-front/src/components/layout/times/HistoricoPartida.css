@@ -1,15 +1,22 @@
+.containerHistorico {
+    width: 450px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .colunaHistorico {
-    width: 350px;
+    width: auto;
     height: auto;
-    margin: 12px;
+    margin: 5px;
     padding: 0;
-    display: block;
+    display: inline-block;
     text-align: center;
     background-color: rgb(255, 255, 255);
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     font-size: 16px;
     font-weight: bolder;
+
 }
 
 .colunaHistorico img {
@@ -18,4 +25,34 @@
     margin: 9px;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.Gols {
+    background-color: white;
+    display: inline-block;
+    width: 400px;
+    padding: 5px;
+}
+.Gols ul{
+    padding: 0;
+}
+.Gols li {
+    display: block;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.MostrarGolsButton {
+    background-color: #649861;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.MostrarGolsButton:hover {
+    background-color: #76bf70;
 }

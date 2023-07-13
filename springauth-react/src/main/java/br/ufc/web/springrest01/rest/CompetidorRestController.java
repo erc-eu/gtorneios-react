@@ -38,6 +38,11 @@ public class CompetidorRestController {
         List<Competidor> comp = competidorRepository.findByCompetidorDoTime(t);
         return comp;
     }
+    @GetMapping(path = {"/{id}/numJogadoresDoTorneio"})
+    List<Competidor> getNumJogadoresDoTorneio(@PathVariable Integer id){
+        List<Competidor> comp = competidorRepository.findByNumJogadoresDoTorneio(id);
+        return comp;
+    }
 
     @PostMapping
     Competidor inserirCompetidor(@RequestBody Competidor competidor){

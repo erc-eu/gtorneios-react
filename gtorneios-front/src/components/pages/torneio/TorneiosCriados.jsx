@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import MenuLogado from "../../layout/MenuLogado";
 import Card from "../../layout/cardTorneios/Card";
 import axios from "axios";
+import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
 import unidecode from 'unidecode';
 
@@ -73,7 +74,7 @@ const TorneiosCriados = () => {
                             descricao={torneioCriado.descricaoT}
                             premio={torneioCriado.premiacao}
                             esporte={torneioCriado.esporte} />
-                        <button onClick={() => delTorneio(torneioCriado.codTorneio)} className="delTorneio">Deletar Torneio</button>
+                        <button onClick={() => delTorneio(torneioCriado.codTorneio)} className="delTorneio"><DeleteIcon/></button>
                     </div>
                 ))}
             </div>

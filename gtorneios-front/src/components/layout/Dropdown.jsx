@@ -37,6 +37,7 @@ const Dropdown = () => {
             </div>
             {(
                 <div className="dropdown-content">
+                    <Link to={'/Estatisticas'}><button className="dropdown-item">Estatisticas</button></Link>
                     <Link to={'/TorneiosCriados'}><button className="dropdown-item">Torneios Criados</button></Link>
                     <Link to={'/UserAlterar'}><button className="dropdown-item" >Alterar Dados</button></Link>
                     <button className="dropdown-item" onClick={sair}>Sair</button>

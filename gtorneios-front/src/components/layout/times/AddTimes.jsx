@@ -21,6 +21,9 @@ const AddTimes = (props) => {
     const [imagem, setImagem] = useState('');
 
     const [timesDaPartida, setTimesDaPartida] = useState([]);
+    const [timesDaPartidaConfronto, setTimesDaPartidaConfronto] = useState([]);
+    const [salvarTimesConfronto, setSalvarTimesConfronto] = useState([]);
+
     const [tPar, setPar] = useState([]);
     const [tImpar, setImpar] = useState([]);
 
@@ -77,7 +80,9 @@ const AddTimes = (props) => {
                         setMostrarBotaoRodada(true);
                     }
                     setTimesDaPartida(res.data);
+                    setTimesDaPartidaConfronto(res.data);
                     separarNumerosParesImpares(res.data);
+                    setSalvarTimesConfronto(res.data);
                 }
             })
         }
@@ -187,7 +192,6 @@ const AddTimes = (props) => {
                     time1: time,
                     time2: timesImpares[index]
                 }));
-                console.log(partidas);
                 axios.post('http://localhost:8080/api/partida', partidas, config)
                     .then(res => {
                         axios.get(`http://localhost:8080/api/partida/${torneioId}`, config).then(res => {
@@ -195,6 +199,7 @@ const AddTimes = (props) => {
                             } else {
                                 separarNumerosParesImpares(res.data);
                                 setTimesDaPartida(res.data);
+                                setTimesDaPartidaConfronto(res.data);
                             }
                         })
                     })
@@ -498,7 +503,7 @@ const AddTimes = (props) => {
             for (let i = 0; i < p.momentoGols.length; i++) {
                 if (p.momentoGols[i] && p.momentoGols[i].nomeCompetidor) {
                     let tempo = Math.floor(Math.random() * 89) + 1;
-                    stringMomento += "\n(" + tempo + "')" + "Fez Gol: " + p.momentoGols[i].nomeCompetidor + " " + p.momentoGols[i].competidorDoTime.abreviacao;
+                    stringMomento += "\n(" + tempo + "')" + "Fez Gol: " + p.momentoGols[i].nomeCompetidor + " " + p.momentoGols[i].competidorDoTime.abreviacao + ".";
                 }
             }
 
@@ -578,12 +583,15 @@ const AddTimes = (props) => {
 
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedPartida, setSelectedPartida] = useState([])
+
+
     useEffect(() => {
         if (partida.length > 0) {
             setSelectedOption(partida[0].codPartida);
             setSelectedPartida(partida[0]);
         }
     }, [partida]);
+
     const handleOptionChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
@@ -591,7 +599,30 @@ const AddTimes = (props) => {
         setSelectedPartida(selected);
         console.log(selected);
     };
-    
+
+    const [time1, setTime1] = useState();
+    const [time2, setTime2] = useState();
+
+    const handleSelectTime1 = (event) => {
+        if (time2 == event.target.value) {
+            alert("iguais");
+        } else {
+
+            const selectedTime = event.target.value;
+            setTime1(selectedTime);
+        }
+    };
+
+    const handleSelectTime2 = (event) => {
+        if (time1 == event.target.value) {
+            alert("iguais");
+        } else {
+            const selectedTime = event.target.value;
+            setTime2(selectedTime);
+        }
+    };
+
+
     return (
         <div>
             <MenuLogado />
@@ -643,17 +674,17 @@ const AddTimes = (props) => {
                                     <img src={time.imagemDoEscudo} />
                                     <li>{time.nome}</li>
                                     {mostrarBotaoDelete && (
-                                        <button className='addInconDelete' onClick={() => deleteTime(time.codTime)}><DeleteIcon/></button>
+                                        <button className='addInconDelete' onClick={() => deleteTime(time.codTime)}><DeleteIcon /></button>
                                     )}
                                     {mostrarBotaoEdit && (
-                                        <button className='addInconEdit' onClick={() => openModal(time)}><EditIcon/></button>
+                                        <button className='addInconEdit' onClick={() => openModal(time)}><EditIcon /></button>
                                     )}
                                     {mostrarBotaoInserirJogador && (
-                                        <button className='addIncon' onClick={() => openCompetidorModal(time)}><AddReactionIcon/></button>
+                                        <button className='addIncon' onClick={() => openCompetidorModal(time)}><AddReactionIcon /></button>
                                     )}
 
                                     <Modal
-                                    //className='modalEditTime'
+                                        //className='modalEditTime'
                                         isOpen={modalIsOpen}
                                         onRequestClose={closeModal}
                                         style={{
@@ -662,29 +693,29 @@ const AddTimes = (props) => {
                                                 height: '350px',
                                                 margin: 'auto',
                                                 textAlign: 'center',
-                                                backgroundColor:'white',
+                                                backgroundColor: 'white',
                                                 // Add any other custom styles you need
                                             },
                                             overlay: {
                                                 backgroundColor: 'rgba(0, 0, 0, 0.2)', // Adjust the transparency here
                                             },
-                                            
+
                                         }}
                                     >
                                         <button className='fecharEditTimeButton' onClick={closeModal}>Fechar</button>
                                         {selectedTime && (
                                             <>
-                                            <div className='divEditTime'>
+                                                <div className='divEditTime'>
 
-                                                <img className='imgEditTime' src={selectedTime.imagemDoEscudo} alt="" />
-                                                <h2 className='h2EditTime'>{selectedTime.nome}</h2>
-                                                <label className='labelEditTime' htmlFor="">Nome Time </label><br></br>
-                                                <input className='inputEditTime' type="text" value={nomeTime} onChange={(e) => setNomeTime(e.target.value)} /><br />
-                                                <label className='labelEditTime' htmlFor="">Abreviacao </label><br></br>
-                                                <input className='inputEditTime' type="text" value={abrev} onChange={(e) => setAbrev(e.target.value)} /><br />
-                                                <label className='labelEditTime' htmlFor="">Imagem do Escudo </label><br />
-                                                <input className='inputEditTime' type="text" value={imgShield} onChange={(e) => setImgShield(e.target.value)} /><br /><br />
-                                            </div>
+                                                    <img className='imgEditTime' src={selectedTime.imagemDoEscudo} alt="" />
+                                                    <h2 className='h2EditTime'>{selectedTime.nome}</h2>
+                                                    <label className='labelEditTime' htmlFor="">Nome Time </label><br></br>
+                                                    <input className='inputEditTime' type="text" value={nomeTime} onChange={(e) => setNomeTime(e.target.value)} /><br />
+                                                    <label className='labelEditTime' htmlFor="">Abreviacao </label><br></br>
+                                                    <input className='inputEditTime' type="text" value={abrev} onChange={(e) => setAbrev(e.target.value)} /><br />
+                                                    <label className='labelEditTime' htmlFor="">Imagem do Escudo </label><br />
+                                                    <input className='inputEditTime' type="text" value={imgShield} onChange={(e) => setImgShield(e.target.value)} /><br /><br />
+                                                </div>
                                             </>
                                         )}
                                         <button className='salvarEditTimeButton' onClick={() => editarTime(selectedTime.codTime)}>Salvar Edição</button>
@@ -704,7 +735,7 @@ const AddTimes = (props) => {
                                             },
                                         }}
                                     >
-                                        <button  className='fecharEditTimeButton' onClick={closeModal}>Fechar</button>
+                                        <button className='fecharEditTimeButton' onClick={closeModal}>Fechar</button>
                                         <h2>Inserir Jogador</h2>
                                         <input type="text" value={jogador} onChange={(e) => { setJogador(e.target.value) }} />
 
@@ -725,14 +756,13 @@ const AddTimes = (props) => {
                                                 <button onClick={() => atualizarPlayers(competidor.codCompetidor)}>Alterar</button>
                                                 <button onClick={() => deletedJogador(competidor)}>Deletar Jogador</button>
                                             </div>
-                                            
+
                                         ))}
                                     </Modal>
                                 </div>
                             ))}
                         </div>
                     </div>
-
                     <div className='gerarPartidas'>
                         <div className='partidasHead'><h1>Partidas</h1></div>
                         <div className='btnGerar'>
@@ -770,8 +800,8 @@ const AddTimes = (props) => {
                                         onRequestClose={closeModal}
                                         style={{
                                             content: {
-                                                width: '350px',
-                                                height: '350px',
+                                                width: '400px',
+                                                height: '400px',
                                                 margin: 'auto',
                                                 // Add any other custom styles you need
                                             },
@@ -793,10 +823,24 @@ const AddTimes = (props) => {
                                             <div className='colunaEditPartida'>
                                                 {selectedPartida.time1?.imagemDoEscudo && <img src={selectedPartida.time1.imagemDoEscudo} />}
                                                 {selectedPartida.time2?.imagemDoEscudo && <img src={selectedPartida.time2.imagemDoEscudo} />}
-                                                
-                                            </div>
-                                            <div className=''>
 
+                                            </div>
+                                            <div className='editConfrontos'>
+                                                <h2 className='editConfrontosTitle'>Monte os times que irão se enfrentar</h2>
+                                                <select className='editConfrontosSelect' onChange={handleSelectTime1} >
+                                                    <option value=''>Selecione um Time</option>
+                                                    {timesDaPartidaConfronto.map((timesP, i) => (
+                                                        <option value={timesP.codTime}>{timesP.nome}</option>
+                                                    ))}
+                                                </select>
+                                                <h2 className='h2EditConfronto'>versus</h2>
+                                                <select className='editConfrontosSelect' onChange={handleSelectTime2} >
+                                                    <option value=''>Selecione um Time</option>
+                                                    {timesDaPartida.map((timesP, i) => (
+                                                        <option value={timesP.codTime}>{timesP.nome}</option>
+                                                    ))}
+                                                </select>
+                                                <button className='salvarEditTimeButton'>Alterar</button>
                                             </div>
                                         </div>
                                     </Modal>

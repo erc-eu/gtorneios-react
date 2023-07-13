@@ -1,6 +1,5 @@
 package br.ufc.web.springrest01.rest;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +34,7 @@ public class TorneioRestController {
         Iterable<Torneio> findAll = torneioRepository.findAll();
         return findAll;
     }
-    
+
     @GetMapping(path = { "/{id}" })
     Torneio getTorneio(@PathVariable Integer id) {
         Optional<Torneio> result = torneioRepository.findById(id);
@@ -49,6 +48,8 @@ public class TorneioRestController {
         return result;
     }
 
+
+
     @PostMapping(path = { "/{id}" })
     Torneio addTorneio(@RequestBody Torneio torneio, @PathVariable Integer id) {
         Optional<User> torn = userRepository.findById(id);
@@ -59,8 +60,9 @@ public class TorneioRestController {
         }
         return null;
     }
-    @DeleteMapping(path = {"/{id}"})
-    void delTorneio (@PathVariable Integer id){
+
+    @DeleteMapping(path = { "/{id}" })
+    void delTorneio(@PathVariable Integer id) {
         Optional<Torneio> torn = torneioRepository.findById(id);
         torneioRepository.delete(torn.get());
     }

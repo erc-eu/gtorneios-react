@@ -1,8 +1,13 @@
 package br.ufc.web.springrest01.rest;
 
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,6 +59,11 @@ public class TimeRestController {
         return team;
     }
 
+    @GetMapping(path = { "/{id}/qtdTimesParticipantes" })
+    List<Time> qtdTimesParticipantes(@PathVariable Integer id) {
+        return timeRepository.qntTimesParticipantes(id);
+    }
+
     @PostMapping(path = { "/{id}" })
     Time addTime(@RequestBody Time time, @PathVariable Integer id) {
         Optional<Torneio> torn = torneioRepository.findById(id);
@@ -76,6 +86,7 @@ public class TimeRestController {
     List<Time> eliminarTime(@PathVariable Integer id, @PathVariable Integer codTorneio, @RequestBody Partida str) {
         Optional<Time> timeOptional = timeRepository.findById(id);
         Optional<Torneio> torneioOptional = torneioRepository.findById(codTorneio);
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
 
         if (timeOptional.isPresent()) {
             Time time = timeOptional.get();
@@ -86,6 +97,7 @@ public class TimeRestController {
             if (partidas.isPresent() && partidas.get().getPlacar() == null) {
                 partidas.get().setPlacar(str.getPlacar());
                 partidas.get().setMomentoDaPontuacao(str.getMomentoDaPontuacao());
+                partidas.get().setDataHora(dataHoraAtual);
                 partidaRepository.save(partidas.get());
             }
         }

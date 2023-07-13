@@ -43,14 +43,13 @@ public class PartidaRestController {
     @GetMapping(path = { "/p/{id}" })
     List<Partida> partidasPeloTorneio(@PathVariable Integer id) {
         List<Partida> partidas = partidaRepository.findPartidasByTorneioAndVencedorTrue(id);
-        System.out.println(partidas);
         return partidas;
     }
 
     @GetMapping(path = { "/{id}/historico" })
     List<Partida> getHistoricoPartidas(@PathVariable Integer id) {
-       List<Partida> p = partidaRepository.findPartidasByTorneio(id);
-       return p;
+        List<Partida> p = partidaRepository.findPartidasByTorneio(id);
+        return p;
     }
 
     @GetMapping(path = { "/{id}" })
@@ -61,7 +60,7 @@ public class PartidaRestController {
             List<Time> timesDaPartida = new ArrayList<>();
 
             for (Time time : times) {
-                
+
                 List<Partida> partidasTime1 = partidaRepository.findByTime1(time);
                 if (partidasTime1 != null) {
                     for (Partida partida : partidasTime1) {
@@ -81,6 +80,22 @@ public class PartidaRestController {
             return timesDaPartida;
         }
         return null;
+    }
+
+    @GetMapping(path = { "/{id}/finalizados" })
+    List<Partida> getTorneiosFinalizados(@PathVariable Integer id) {
+        List<Partida> numPartidas = partidaRepository.numTorneiosFinalizados(id);
+        return numPartidas;
+    }
+
+    @GetMapping(path = { "/{id}/primeira-data-torneio" })
+    public List<Object[]> getPrimeiraDataPorTorneio(@PathVariable Integer id) {
+        return partidaRepository.findPrimeiraDataPorTorneio(id);
+    }
+
+    @GetMapping(path = { "/{id}/ultima-data-torneio" })
+    public List<Object[]> getUltimaDataPorTorneio(@PathVariable Integer id) {
+        return partidaRepository.findUltimaDataPorTorneio(id);
     }
 
     @PostMapping

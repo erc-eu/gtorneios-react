@@ -57,6 +57,8 @@ public class UserRestController {
         return !result.isPresent() ? null : result.get();
     }
 
+
+
     @PutMapping(path = { "/{codigo}" })
     Optional<User> alterUser(@RequestBody User userAlt, @PathVariable Integer codigo) {
         Optional<User> user = userRepository.findById(codigo);
@@ -64,6 +66,7 @@ public class UserRestController {
             User usuario = user.get();
             System.out.println("entrou");
             usuario.setEmail(userAlt.getEmail());
+            usuario.setUsername(userAlt.getUsername());
             usuario.setAvatar(userAlt.getAvatar());
             userRepository.save(usuario);
             return user;

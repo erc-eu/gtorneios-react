@@ -64,7 +64,7 @@ const Login = () => {
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
 
                     <div className="input-icons">
-                        <i className="icon" onClick={onClickIconUsername}><AccountCircleIcon /></i>
+                        <i className="icon" onClick={onClickIconUsername}><AccountCircleIcon className="icon2" /></i>
                         <input type="text"
                             ref={inputUsername}
                             id="username"
@@ -77,7 +77,7 @@ const Login = () => {
                 </div>
                 <div className="form-group">
                     <div className="input-icons">
-                        <i className="icon" onClick={onClickIconPassword}><LockOpenIcon /></i>
+                        <i className="icon" onClick={onClickIconPassword}><LockOpenIcon className="icon2" /></i>
                         <input type="password"
                             id="password"
                             ref={inputPassword}

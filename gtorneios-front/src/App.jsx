@@ -9,6 +9,7 @@ import NovoTorneio from './components/pages/torneio/NovoTorneio';
 import TorneiosCriados from './components/pages/torneio/TorneiosCriados';
 import AddTimes from './components/layout/times/AddTimes';
 import HistoricoPartida from './components/layout/times/HistoricoPartida';
+import Estatisticas from './components/pages/user/Estatisticas';
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
           <Route exact path={'/UserAlterar'} component={UserAlterar}><UserAlterar/></Route>
           <Route exact path={'/NovoTorneio'} component={NovoTorneio}><NovoTorneio/></Route>
           <Route exact path={'/TorneiosCriados'} component={TorneiosCriados}><TorneiosCriados/></Route>
+          <Route excat path={'/Estatisticas'} component={Estatisticas}><Estatisticas/></Route>
           <Route path="/AddTimes/:id" component={AddTimes}></Route>
           <Route path="/HistoricoPartida/:id" component={HistoricoPartida}></Route>
         </Switch>

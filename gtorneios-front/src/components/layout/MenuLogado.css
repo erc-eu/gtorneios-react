@@ -2,11 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 60px; /* Defina uma altura fixa para o menu */
     background-color: #1f2d3a;
-    padding: 0 ;
-}
-
+    padding: 0;
+  }
+  
+  /* Restante do seu estilo CSS */
+  
 .menu-left {
     display: flex;
     align-items: center;
@@ -17,10 +19,26 @@
     align-items: center;
 }
 
+.menu-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-logo {
+    margin-right: 100px;
+    padding: 24px;
+    font-size: 18px;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
 .menu-button {
     color: white;
     border: none;
-    padding: 21px;
+    padding: 24px;
     margin-right: 0;
     cursor: pointer;
 }
@@ -31,12 +49,12 @@
 }
 
 .dropdown-button {
-    background-color: #1f2d3a;
+    background-color: transparent;
     color: white;
     text-align: left;
     border: none;
     width: 140px;
-    padding: 21px;
+    padding: 24px;
     cursor: pointer;
 }
 
@@ -55,6 +73,7 @@
     padding: 16px;
     cursor: pointer;
 }
+
 .dropdown-item a {
     text-decoration: none;
     color: white;
@@ -70,7 +89,7 @@
 }
 
 .menu-right .menu-button {
-    background-color: #1f2d3a;
+    background-color: transparent;
 }
 
 .menu-right .menu-button:hover {
@@ -82,8 +101,9 @@
     margin-right: 0;
 }
 
-.droping{
+.droping {
     display: flex;
     margin-left: 10px;
     align-items: center;
+
 }

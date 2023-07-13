@@ -1,5 +1,4 @@
-
-.slide-container{
+.slide-container {
   max-width: 400px;
   width: auto;
   padding: 40px 0;
@@ -7,62 +6,72 @@
   margin-bottom: -20px;
 
 }
-.slide-content{
+
+.slide-content {
   border-radius: 0 25px 0 25px;
   margin: 0 40px;
   overflow: hidden;
   box-shadow: 1px 2px 5px black;
 }
-.card{
+
+.card {
   background-color: #1f2d3a;
 }
+
 .image-content,
-.card-content{
+.card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px 14px;
 }
-.bod{
+
+.bod {
   width: 300px;
   background-color: #FFC300;
 }
-.card-content{
+
+.card-content {
   background-color: #1f2d3a;
 }
-.image-content{
+
+.image-content {
   background-color: white;
 }
-.card-content .description{
+
+.card-content .description {
   width: 300px;
 }
 
-.card-info{
+.card-info {
   width: auto;
   height: 50px;
   text-align: center;
   border-top: 1px solid black;
 }
-.name-bottom{
+
+.name-bottom {
   font-family: Arial, Helvetica, sans-serif;
   color: white;
 }
-.image-content{
+
+.image-content {
   position: relative;
   row-gap: 5px;
   padding: 25px 0;
 }
-.overlay{
+
+.overlay {
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
-  background-color:#FFC300;
+  background-color: #f40021;
   border-radius: 0 0 0 80px;
 }
 
-.card-image{
+.card-image {
   position: relative;
   height: 50px;
   width: auto;
@@ -70,13 +79,14 @@
 
 }
 
-.name{
+.name {
   font-size: 26px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
-  color: black;
+  color: white;
 }
-.description{
+
+.description {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 20px;
   height: 80px;
@@ -84,28 +94,28 @@
   color: white;
   text-align: center;
 }
-.button{
+
+.button {
   border: none;
   font-size: 16px;
-  color: black;
+  color: white;
   padding: 8px 16px;
-  background-color: #FFC300;;
+  background-color: #f40021;
   border-radius: 6px;
   margin: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 18px;
-  font-weight: bolder;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-}
-.button:hover{
-  background: greenyellow;
+  
 }
 
+.button:hover {
+  background: #FFC300;
+}
 
-.delTorneio{
-  width: 150px;
+
+.delTorneio {
+  width: 70px;
   display: block;
   text-align: center;
   margin: 0 auto;
@@ -114,12 +124,12 @@
   cursor: pointer;
   font-size: 20px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: red;
-  background-color: #151e25;
+  color: white;
+  background-color: red;
 }
 
-.delTorneio:hover{
+.delTorneio:hover {
   background-color: red;
-  color: white;
+  color: black;
   transition: all 0.3s ease;
 }
