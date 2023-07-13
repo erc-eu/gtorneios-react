@@ -98,6 +98,7 @@ public class TimeRestController {
                 partidas.get().setPlacar(str.getPlacar());
                 partidas.get().setMomentoDaPontuacao(str.getMomentoDaPontuacao());
                 partidas.get().setDataHora(dataHoraAtual);
+                partidas.get().setEstatisticas(str.getEstatisticas());
                 partidaRepository.save(partidas.get());
             }
         }

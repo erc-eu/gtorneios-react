@@ -450,6 +450,13 @@ const AddTimes = (props) => {
             return null;
         }
     };
+    
+    const status = () =>{
+        let cartoesAmarelos = Math.floor(Math.random() * 8);
+        let cartoesVermelhos = Math.floor(Math.random() * 3);
+        let chutesAoGol = Math.floor(Math.random() * 49);
+        return 'Cartoes Amarelos: '+cartoesAmarelos+'\nCartoes Vermelhos: ' + cartoesVermelhos +'\nChutes ao gol: '+ chutesAoGol;
+    }
 
     const gerarPlacar = async (time1, time2) => {
         let placarTime1;
@@ -463,18 +470,22 @@ const AddTimes = (props) => {
         if (placarTime1 > placarTime2) {
             setTimesDaPartida(prevTimes => prevTimes.filter(time => time.codTime !== time2.codTime));
             let est = await golsDosJogadores(time1, time2, placarTime1, placarTime2);
+            let t = await status();
             return {
                 timePerdedor: time2,
                 placar: `${time1.nome}: ${placarTime1} - ${time2.nome}: ${placarTime2}`,
-                momentoGols: est.golsTime1.concat(est.golsTime2)
+                momentoGols: est.golsTime1.concat(est.golsTime2),
+                estatisticas: t
             };
         } else if (placarTime1 < placarTime2) {
             setTimesDaPartida(prevTimes => prevTimes.filter(time => time.codTime !== time1.codTime));
             let est = await golsDosJogadores(time1, time2, placarTime1, placarTime2);
+            let t = await status();
             return {
                 timePerdedor: time1,
                 placar: `${time1.nome}: ${placarTime1} - ${time2.nome}: ${placarTime2}`,
-                momentoGols: est.golsTime1.concat(est.golsTime2)
+                momentoGols: est.golsTime1.concat(est.golsTime2),
+                estatisticas: t
             };
         }
     };
@@ -498,7 +509,7 @@ const AddTimes = (props) => {
             let time2 = timesDaPartida[i + 1];
 
             let p = await gerarPlacar(time1, time2);
-            console.log(p);
+            console.log(p.estatisticas);
             let stringMomento = "";
             for (let i = 0; i < p.momentoGols.length; i++) {
                 if (p.momentoGols[i] && p.momentoGols[i].nomeCompetidor) {
@@ -510,7 +521,8 @@ const AddTimes = (props) => {
             console.log(stringMomento);
             let t = {
                 placar: p.placar,
-                momentoDaPontuacao: stringMomento
+                momentoDaPontuacao: stringMomento,
+                estatisticas: p.estatisticas
             };
 
             promises.push(

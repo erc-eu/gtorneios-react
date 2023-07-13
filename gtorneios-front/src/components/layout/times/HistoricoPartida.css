@@ -56,3 +56,8 @@
 .MostrarGolsButton:hover {
     background-color: #76bf70;
 }
+.estatisticas{
+    padding: 10px;
+    margin: 0 auto;
+    width: 200px;
+}

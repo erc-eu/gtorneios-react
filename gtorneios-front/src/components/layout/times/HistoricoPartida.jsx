@@ -55,6 +55,9 @@ const HistoricoPartida = (props) => {
                         <div className={`colunaHistorico${i === partidas.length - 1 ? " centralizado" : ""}`}>
                             <br></br>
                             {partida.dataHora}<br></br>
+                            <div className="estatisticas">
+                                {partida.estatisticas}
+                            </div>
                             {partida.time1?.imagemDoEscudo && (
                                 <img src={partida.time1.imagemDoEscudo} alt="Escudo Time 1" />
                             )}
